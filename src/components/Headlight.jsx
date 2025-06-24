@@ -4,11 +4,14 @@ export default function Headlight({ root, lightsOn }) {
   useEffect(() => {
     if (!root) return;
     root.traverse((child) => {
+      if (child.name) {
+        console.log("🚗 子节点名:", child.name);
+      }
       if (
         child.name?.toLowerCase().includes("light")||
         child.name?.toLowerCase().includes("head")
       ) {
-        child.color = lightsOn ? 0xfffff1 : 0x000000; // Set color to white if lights are on, otherwise black
+        child.visible = lightsOn; // Set intensity to 1 if lights are on, otherwise 0
       }
     });
   }, [root, lightsOn]);

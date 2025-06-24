@@ -5,11 +5,26 @@ export default function CarModel({ color, onLoaded }) {
   const group = useRef();
   const { scene, materials } = useGLTF("/porsche718.glb");
 
-  useEffect(() => {
-    Object.values(materials).forEach((mat) => {
-      if (mat.color) mat.color.set(color);
-    });
-  }, [color]);
+useEffect(() => {
+  Object.entries(materials).forEach(([name, mat]) => {
+    const lowerName = name.toLowerCase();
+    if (
+      mat.color &&
+      (
+        lowerName.includes("body") ||
+        lowerName.includes("paint") ||
+        lowerName.includes("car") ||
+        lowerName.includes("chassis")
+      ) &&
+      !lowerName.includes("tyre") &&
+      !lowerName.includes("wheel") &&
+      !lowerName.includes("glass") &&
+      !lowerName.includes("rim")
+    ) {
+      mat.color.set(color);
+    }
+  });
+}, [color]);
 
   useEffect(() => {
     if (onLoaded) onLoaded(group.current);

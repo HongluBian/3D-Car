@@ -1,6 +1,6 @@
 export default function ControlPanel({ color, setColor, lightsOn, setLightsOn, onSave, setCameraView }) {
   return (
-    <div className="absolute top-6 left-6 bg-white bg-opacity-90 rounded-xl shadow space-y-4 px-8 py-4 text-xl">
+    <div className="absolute top-6 left-6 bg-white/80 backdrop-blur-md shadow-xl rounded-2xl p-6 w-72 space-y-4 text-gray-800">
       <div className="flex items-center gap-5">
         <label className="font-semibold">Color：</label>
         <select
@@ -19,9 +19,9 @@ export default function ControlPanel({ color, setColor, lightsOn, setLightsOn, o
       <div className="flex flex-col gap-2">
         <label className="font-semibold text-xl">Camera:</label>
         <div className="grid grid-cols-3 gap-2">
-          <button onClick={() => setCameraView("front")} className="bg-gray-200 hover:bg-gray-300 rounded px-3 py-2 text-sm">Front</button>
-          <button onClick={() => setCameraView("top")} className="bg-gray-200 hover:bg-gray-300 rounded px-3 py-2 text-sm">Top</button>
-          <button onClick={() => setCameraView("back")} className="bg-gray-200 hover:bg-gray-300 rounded px-3 py-2 text-sm">Back</button>
+          <button onClick={() => setCameraView("front")} className="w-full py-2 px-4 rounded-lg text-white bg-blue-600 hover:bg-blue-700 font-semibold shadow transition">Front</button>
+          <button onClick={() => setCameraView("top")} className="w-full py-2 px-4 rounded-lg text-white bg-blue-600 hover:bg-blue-700 font-semibold shadow transition">Top</button>
+          <button onClick={() => setCameraView("back")} className="w-full py-2 px-4 rounded-lg text-white bg-blue-600 hover:bg-blue-700 font-semibold shadow transition">Back</button>
         </div>
       </div>
       
@@ -34,7 +34,7 @@ export default function ControlPanel({ color, setColor, lightsOn, setLightsOn, o
     
       <button
         onClick={onSave}
-        className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded w-full text-lg"
+        className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded w-full text-xl"
       >
         💾 Save Configuration
       </button>

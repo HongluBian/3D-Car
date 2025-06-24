@@ -46,16 +46,18 @@ const setCameraView = (view) => {
   setTargetCameraPosition(newPos);
 };
 
-  return (
-    <>
-      <Canvas style={{ height: "100vh", background: "#f3f4f6" }} shadows camera={{ position: [5, 2, 6], fov: 45 }}>
-        <ambientLight intensity={1.0} />
-        <directionalLight position={[5, 5, 14]} castShadow />
-        <CarModel color={color} onLoaded={setCarRef} />
-        <Headlight root={carRef} lightsOn={lightsOn} />
-        <CameraController targetPosition={targetCameraPosition} />
-        <OrbitControls ref={orbitRef} />
-      </Canvas>
+ return (
+    <div style={{ display: "flex", height: "100vh" }}>
+      <div style={{ flex: 1, position: "relative" }}>
+        <Canvas style={{ width: "100%", height: "100%", background: "#f3f4f6" }} shadows camera={{ position: [5, 2, 6], fov: 45 }}>
+          <ambientLight intensity={1.0} />
+          <directionalLight position={[5, 5, 14]} castShadow />
+          <CarModel color={color} onLoaded={setCarRef} />
+          <Headlight root={carRef} lightsOn={lightsOn} />
+          <CameraController targetPosition={targetCameraPosition} />
+          <OrbitControls ref={orbitRef} />
+        </Canvas>
+      </div>
       <ControlPanel
         color={color}
         setColor={setColor}
@@ -64,7 +66,7 @@ const setCameraView = (view) => {
         onSave={handleSave}
         setCameraView={setCameraView}
       />
-    </>
+    </div>
   );
 }
 
