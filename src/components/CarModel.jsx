@@ -15,5 +15,5 @@ export default function CarModel({ color, onLoaded }) {
     if (onLoaded) onLoaded(group.current);
   }, [scene]);
 
-  return <primitive object={scene} ref={group} scale={150} position={[0, 0, 0]} />;
+  return <primitive object={scene} ref={group} scale={125} position={[0, 0, 0]} />;
 }

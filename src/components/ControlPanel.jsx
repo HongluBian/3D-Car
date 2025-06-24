@@ -1,4 +1,4 @@
-export default function ControlPanel({ color, setColor, lightsOn, setLightsOn, onSave }) {
+export default function ControlPanel({ color, setColor, lightsOn, setLightsOn, onSave, setCameraView }) {
   return (
     <div className="absolute top-6 left-6 bg-white bg-opacity-90 rounded-xl shadow space-y-4 px-8 py-4 text-xl">
       <div className="flex items-center gap-5">
@@ -14,6 +14,16 @@ export default function ControlPanel({ color, setColor, lightsOn, setLightsOn, o
           <option value="white">White</option>
         </select>
       </div>
+
+            {/* 这里插入视角切换按钮 */}
+      <div className="flex flex-col gap-2">
+        <label className="font-semibold text-xl">Camera:</label>
+        <div className="grid grid-cols-3 gap-2">
+          <button onClick={() => setCameraView("front")} className="bg-gray-200 hover:bg-gray-300 rounded px-3 py-2 text-sm">Front</button>
+          <button onClick={() => setCameraView("top")} className="bg-gray-200 hover:bg-gray-300 rounded px-3 py-2 text-sm">Top</button>
+          <button onClick={() => setCameraView("back")} className="bg-gray-200 hover:bg-gray-300 rounded px-3 py-2 text-sm">Back</button>
+        </div>
+      </div>
       
       <button
         onClick={() => setLightsOn((v) => !v)}
@@ -28,6 +38,6 @@ export default function ControlPanel({ color, setColor, lightsOn, setLightsOn, o
       >
         💾 Save Configuration
       </button>
-    </div>    
+    </div>      
   );
 }
