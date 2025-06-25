@@ -1,44 +1,48 @@
 import { useGLTF } from "@react-three/drei";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
 
-export default function CarModel({ color, metalness, roughness, onLoaded }) {
+export default function CarModel({ color, metalness, roughness, rotateWheels, onLoaded }) {
   const group = useRef();
   const { scene, materials } = useGLTF("/porsche718.glb");
+  const wheelRefs = useRef([]);
 
-  const [targetColor] = useState(new THREE.Color(color)); // 目标色
-  const [currentColor] = useState(new THREE.Color(color)); // 当前色
+  // mesh
+  useEffect(() => {
+    wheelRefs.current = [];
+    scene.traverse((child) => {
+      const name = child.name.toLowerCase();
+      if (name.includes("wheel") || name.includes("tire")) {
+        wheelRefs.current.push(child);
+      }
+    });
 
-  // ✅ 每帧动画推进颜色渐变
-  useFrame(() => {
-    Object.entries(materials).forEach(([name, mat]) => {
-      const lower = name.toLowerCase();
-      const isBody =
+    // materials
+    Object.values(materials).forEach((mat) => {
+      const matName = mat.name?.toLowerCase() || "";
+      if (
         mat.color &&
-        !lower.includes("wheel") &&
-        !lower.includes("tyre") &&
-        !lower.includes("glass") &&
-        !lower.includes("rim");
-
-      if (isBody) {
-        // 插值颜色
-        currentColor.lerp(targetColor, 0.1);
-        mat.color.set(currentColor);
+        !matName.includes("tyre") &&
+        !matName.includes("wheel") &&
+        !matName.includes("rim") &&
+        !matName.includes("glass")
+      ) {
+        mat.color.set(color);
         mat.metalness = metalness;
         mat.roughness = roughness;
       }
     });
+
+    if (onLoaded) onLoaded(group.current);
+  }, [scene, materials, color, metalness, roughness]);
+
+  useFrame((_, delta) => {
+    if (rotateWheels) {
+      wheelRefs.current.forEach((wheel) => {
+        wheel.rotation.x += delta * 100;
+      });
+    }
   });
 
-  // ✅ 每次 color 改变时，更新目标颜色
-  useEffect(() => {
-    targetColor.set(color);
-  }, [color]);
-
-  useEffect(() => {
-    if (onLoaded) onLoaded(group.current);
-  }, [scene]);
-
-  return <primitive object={scene} ref={group} scale={125} position={[0, 0, 0]} />;
+  return <primitive object={scene} ref={group} scale={145} position={[0, 0, 0]} />;
 }

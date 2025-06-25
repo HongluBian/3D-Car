@@ -4,25 +4,36 @@ import { useState, useRef } from "react";
 import * as THREE from "three";
 import axios from "axios";
 
+// Components
 import CarModel from "./components/View/CarModel";
 import Headlight from "./components/View/Headlight";
-import ControlPanel from "./components/Controller/ControlPanel";
 import CameraController from "./components/View/CameraController";
+import HDRIEnvironment from "./components/Env/HDRIenv";
+import ControlPanel from "./components/Controller/ControlPanel";
 import MaterialPanel from "./components/Controller/MaterialPanel";
 import SaveButton from "./components/Controller/SaveButton";
+import ImportFromServerButton from "./components/Controller/ImportFromServerButton";
+
+
 
 function App() {
   const [color, setColor] = useState("orange");
   const [lightsOn, setLightsOn] = useState(true);
-  const [carRef, setCarRef] = useState(null);
-  const orbitRef = useRef();
-  const [targetCameraPosition, setTargetCameraPosition] = useState(new THREE.Vector3(5, 2, 6)); 
   const [metalness, setMetalness] = useState(0.5);
   const [roughness, setRoughness] = useState(0.5);
+  const [carRef, setCarRef] = useState(null);
+  const orbitRef = useRef();
+
+  const [targetCameraPosition, setTargetCameraPosition] = useState(
+    new THREE.Vector3(5, 2, 6)
+  );
 
   const handleSave = () => {
     const config = { color, lightsOn, metalness, roughness };
-    axios.post("http://localhost:3001/save", config).then(() => alert("Configuration saved"));
+    axios
+      .post("http://localhost:3001/save", config)
+      .then(() => alert("✅ Configuration saved!"))
+      .catch(() => alert("❌ Failed to save"));
   };
 
   const setCameraView = (view) => {
@@ -47,13 +58,15 @@ function App() {
 
   return (
     <div style={{ display: "flex", height: "100vh" }}>
+      {/* 3D Canvas */}
       <div style={{ flex: 1, position: "relative" }}>
         <Canvas
           style={{ width: "100%", height: "100%", background: "#f3f4f6" }}
           shadows
           camera={{ position: [5, 2, 6], fov: 45 }}
         >
-          <ambientLight intensity={0.6} />
+          <HDRIEnvironment path="/hdr/sky.hdr" />
+          <ambientLight intensity={0.8} />
           <directionalLight position={[5, 5, 14]} castShadow />
           <CarModel
             color={color}
@@ -67,7 +80,8 @@ function App() {
         </Canvas>
       </div>
 
-      <div className="flex-col gap-4 p-4 w-72">
+      {/* UI 控制面板 */}
+      <div className="flex flex-col gap-4 p-4 w-72">
         <ControlPanel
           color={color}
           setColor={setColor}
@@ -82,6 +96,12 @@ function App() {
           setRoughness={setRoughness}
         />
         <SaveButton onSave={handleSave} />
+        <ImportFromServerButton
+          setColor={setColor}
+          setLightsOn={setLightsOn}
+          setMetalness={setMetalness}
+          setRoughness={setRoughness}
+        />
       </div>
     </div>
   );

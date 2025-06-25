@@ -1,4 +1,4 @@
-export default function ControlPanel({ color, setColor, lightsOn, setLightsOn, onSave, setCameraView }) {
+export default function ControlPanel({ color, setColor, lightsOn, setLightsOn, onSave, setCameraView, rotateWheels, setRotateWheels }) {
   return (
     <div className="bg-white/80 backdrop-blur-md shadow-xl rounded-2xl p-6 w-72 text-gray-800 flex flex-col gap-4">
       <h2 className="font-semibold text-gray-800 text-base mb-2">View Settings</h2>
@@ -35,6 +35,13 @@ export default function ControlPanel({ color, setColor, lightsOn, setLightsOn, o
           className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded w-full font-semibold text-base"
         >
           {lightsOn ? "🔌 Headlight Off" : "💡 Headlight On"}
+        </button>
+
+        <button
+          onClick={() => setRotateWheels((v) => !v)}
+          className="bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded w-full text-lg font-semibold mt-2"
+        >
+          {rotateWheels ? "🛑 Stop Wheels" : "🔄 Rotate Wheels"}
         </button>
       </div>
     </div>

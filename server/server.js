@@ -10,7 +10,7 @@ app.use(express.json());
 app.post('/save', (req, res) => {
   const config = req.body;
   fs.writeFileSync('config.json', JSON.stringify(config, null, 2));
-  res.json({ message: '配置已保存' });
+  res.json({ message: 'Configuration Saved' });
 });
 
 app.get('/load', (req, res) => {
@@ -18,7 +18,7 @@ app.get('/load', (req, res) => {
     const data = fs.readFileSync('config.json');
     res.json(JSON.parse(data));
   } else {
-    res.json({});
+    res.json({});5173
   }
 });
 
