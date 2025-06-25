@@ -27,7 +27,3 @@ npm run dev
 # Backend (in /server)
 npm install
 node index.js
-
-
-🌐 Live Demo
-Vercel Demo
