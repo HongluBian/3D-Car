@@ -1,28 +1,33 @@
-# 3D Furniture Configurator
+# 🚗 3D Car Configurator
 
-A simple 3D furniture viewer and configurator built with **React**, **Three.js**, and **Tailwind CSS**.  
-Deployed on [Vercel](https://3-d-car-git-main-honglus-projects-2580078e.vercel.app/) ✅
+A simple 3D car configurator built with React, Three.js, and TailwindCSS.
 
-## 🌟 Features
+## 🔧 Features
 
-- Load glTF 3D furniture model (e.g., Chair)
-- Real-time material color selection
-- Interactive camera (rotate, zoom via mouse)
-- Save configuration to backend (local Express API)
-- Tailwind-styled UI for clean control panel
+- 🎨 Change car color (Orange, Pink, Silver, White)
+- 💡 Toggle headlights
+- 🎛️ Adjust metalness and roughness in real-time
+- 🧭 Switch camera views (Front, Top, Back)
+- 🌄 Realistic lighting with HDRI environment
+- 💾 Save and load config from local server (Express)
 
-## 🛠️ Tech Stack
+## 🛠 Tech Stack
 
-- React + Vite
-- Three.js via @react-three/fiber
-- Tailwind CSS
-- Axios for API communication
-- Node.js + Express (optional backend)
+- **Frontend:** React, Vite, TailwindCSS, Three.js, @react-three/fiber, @react-three/drei  
+- **Backend:** Node.js + Express (for config saving/loading)
+- **3D Assets:** glTF (.glb), HDR (.hdr)
 
-## 🚀 Get Started Locally
+## 🚀 Usage
 
 ```bash
-git clone https://github.com/HongluBian/3D-Car.git
-cd 3D-Car
+# Frontend
 npm install
 npm run dev
+
+# Backend (in /server)
+npm install
+node index.js
+
+
+🌐 Live Demo
+Vercel Demo
